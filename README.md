@@ -101,6 +101,7 @@ Run these commands from the project directory:
 npm run dev               # Start the local HTTPS development server
 npm run build             # Create the production bundle in dist/
 npm run validate-manifest # Validate manifest.xml
+npm run validate-manifest:production # Validate manifest.production.xml
 ```
 
 Windows shortcuts are also available:
@@ -119,6 +120,7 @@ The build output is generated in `dist/`. It is a generated folder and is not co
 FormaScholar/
 |-- manifest.xml                         Word add-in manifest for local use
 |-- manifest.production.template.xml     Template for hosted deployment
+|-- manifest.production.xml              Ready-to-use GitHub Pages manifest
 |-- package.json                         Scripts and dependencies
 |-- package-lock.json                    Locked npm dependency tree
 |-- START_DEV.bat                        Windows development launcher
@@ -137,17 +139,39 @@ FormaScholar/
 
 The supplied reference DOCX is kept local and is not included in the public repository. The derived metadata file in `reference/` is included for development and audit purposes.
 
-## Production deployment
+## Use the hosted version
 
-The add-in has no server-side backend, but its compiled web files must be hosted on an HTTPS web host for production use.
+FormaScholar is deployed automatically to GitHub Pages whenever the `main` branch passes GitHub Actions.
 
-1. Run `npm run build`.
-2. Host the contents of `dist/` on an HTTPS static host.
-3. Copy `manifest.production.template.xml` to a production manifest file.
-4. Replace each `https://YOUR-HOST.example.com` value with the actual HTTPS origin.
-5. Deploy the production manifest through the appropriate Microsoft 365 add-in distribution method.
+Hosted task pane:
 
-End users do not need Node.js or a command-line environment after the compiled assets are hosted.
+```text
+https://chow0226.github.io/FormaScholar/taskpane.html
+```
+
+### One-time repository setup
+
+The repository owner must enable GitHub Pages once:
+
+1. Open the repository **Settings** on GitHub.
+2. Open **Pages** under **Code and automation**.
+3. Set **Source** to **GitHub Actions**.
+4. Push changes to `main`.
+
+GitHub Actions installs dependencies, builds the add-in, validates both manifests, and publishes `dist/` to GitHub Pages. End users do not need Node.js, npm, the repository source code, or a local server.
+
+### Use the add-in in Word
+
+1. Download [`manifest.production.xml`](https://github.com/chow0226/FormaScholar/blob/main/manifest.production.xml) and save the file locally. Use the **Raw** or download option if necessary.
+2. Open a `.docx` manuscript in Word on the web.
+3. Open **Home > Add-ins** and choose the advanced or additional settings option.
+4. Select **Upload My Add-in**.
+5. Choose the downloaded `manifest.production.xml` file.
+6. Open the FormaScholar tab or button in the Word ribbon.
+7. Choose **Open FormaScholar**.
+8. Select **Validate current document**.
+
+Use `manifest.production.xml` for the hosted version. The regular `manifest.xml` is for developers running the add-in locally at `https://localhost:3000`.
 
 ## Troubleshooting
 
