@@ -127,7 +127,7 @@ FormaScholar/
 |-- BUILD.bat                            Windows build script
 |-- VALIDATE_MANIFEST.bat                Windows manifest validation script
 |-- assets/                              Add-in icons
-|-- reference/                           Derived reference metadata
+|-- reference/                           Reference metadata and DOCX fixture
 |-- src/
 |   |-- core/                            Validation and correction logic
 |   |-- ooxml/                           DOCX and OOXML inspection
@@ -137,7 +137,7 @@ FormaScholar/
 |   `-- word/                            Word document adapter
 ```
 
-The supplied reference DOCX is kept local and is not included in the public repository. The derived metadata file in `reference/` is included for development and audit purposes.
+The supplied AIP DOCX fixture and its derived metadata are included in `reference/` for development, integration checks, and audit purposes.
 
 ## Use the hosted version
 
