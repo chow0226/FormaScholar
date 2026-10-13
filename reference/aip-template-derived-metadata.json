@@ -1,0 +1,34 @@
+{
+  "sourceFile": "AIP Template(7).docx",
+  "pageSize": {
+    "widthTwips": 12240,
+    "heightTwips": 15840,
+    "widthInches": 8.5,
+    "heightInches": 11.0
+  },
+  "sectionMargins": {
+    "topTwips": 1440,
+    "rightTwips": 1440,
+    "bottomTwips": 1440,
+    "leftTwips": 1440,
+    "topInches": 1.0,
+    "rightInches": 1.0,
+    "bottomInches": 1.0,
+    "leftInches": 1.0
+  },
+  "writtenBottomMarginConflict": "Page 8 written summary says 1.18 inch, while DOCX sectPr stores 1.0 inch.",
+  "styles": {
+    "Paper Title": {"fontSizePt": 18, "bold": true, "alignment": "center"},
+    "Author Name": {"fontSizePt": 14, "alignment": "center", "spaceBeforePt": 18, "spaceAfterPt": 18},
+    "Author Affiliation": {"fontSizePt": 10, "italic": true, "alignment": "center"},
+    "Author Email": {"fontSizePt": 10, "italic": false, "alignment": "center", "conflict": "Written instruction says italic."},
+    "Abstract": {"fontSizePt": 9, "alignment": "justified", "leftIndentPt": 14.45, "rightIndentPt": 14.45, "spaceBeforePt": 18, "spaceAfterPt": 18},
+    "Paragraph": {"fontSizePt": 10, "alignment": "justified", "firstLineIndentPt": 14.2},
+    "Heading 1": {"bold": true, "allCaps": true, "alignment": "center", "spaceBeforePt": 12, "spaceAfterPt": 12},
+    "Heading 2": {"bold": true, "alignment": "center", "spaceBeforePt": 12, "spaceAfterPt": 12},
+    "Heading 3": {"fontSizePt": 10, "italic": true, "alignment": "center", "spaceBeforePt": 12, "spaceAfterPt": 12},
+    "Figure Caption": {"fontSizePt": 9, "alignment": "center", "spaceBeforePt": 6},
+    "Equation": {"alignment": "center", "tabStopsTwips": [{"alignment":"center","position":4320},{"alignment":"right","position":9242}]},
+    "Reference": {"leftIndentPt": 21.3, "hangingIndentPt": 21.3}
+  }
+}

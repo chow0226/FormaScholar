@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <title>FormaScholar</title>
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <div class="brand-mark">FS</div>
+      <div>
+        <h1>FormaScholar</h1>
+        <p>Deterministic manuscript validation</p>
+      </div>
+    </header>
+
+    <main>
+      <nav class="mode-tabs" aria-label="FormaScholar workspace" role="tablist">
+        <button id="validation-tab" class="mode-tab active" data-view="validation" type="button" role="tab" aria-selected="true" aria-controls="validation-view">Validate</button>
+        <button id="template-tab" class="mode-tab" data-view="templates" type="button" role="tab" aria-selected="false" aria-controls="templates-view">Template Rules</button>
+      </nav>
+
+      <div id="progress" class="progress hidden"><span></span><p>Reading Word document...</p></div>
+      <div id="error" class="error hidden"></div>
+
+      <section id="validation-view" class="workspace-view" role="tabpanel" aria-labelledby="validation-tab" aria-hidden="false">
+        <section class="panel strategy-panel">
+          <label for="strategy">Formatting strategy</label>
+          <select id="strategy">
+            <option>AIP Conference Proceedings - September 2023</option>
+          </select>
+          <div class="strategy-meta">
+            <span id="rule-count">0 rules</span>
+            <span id="strategy-origin">Built-in and immutable</span>
+          </div>
+          <button id="validate" class="primary" disabled>Validate current document</button>
+        </section>
+
+        <section id="results" class="hidden">
+          <section class="score-card">
+            <div class="score-ring" id="score-ring"><strong id="score">-</strong><small>overall</small></div>
+            <div class="score-copy">
+              <h2>Formatting summary</h2>
+              <p id="active-strategy-summary" class="active-strategy-summary"></p>
+              <p id="score-detail">AIP compliance and outstanding issues appear after validation.</p>
+              <p id="coverage">Run validation to inspect this manuscript.</p>
+            </div>
+          </section>
+
+          <section class="stats" aria-label="Validation summary">
+            <button class="stat filter active" data-filter="all"><strong id="stat-all">0</strong><span>All</span></button>
+            <button class="stat filter" data-filter="failed"><strong id="stat-failed">0</strong><span>Failed</span></button>
+            <button class="stat filter" data-filter="manual_review"><strong id="stat-manual">0</strong><span>Review</span></button>
+            <button class="stat filter" data-filter="checklist"><strong id="stat-checklist">0</strong><span>Checklist</span></button>
+            <button class="stat filter" data-filter="passed"><strong id="stat-passed">0</strong><span>Passed</span></button>
+            <button class="stat filter" data-filter="consistency"><strong id="stat-consistency">0</strong><span>Consistency</span></button>
+          </section>
+
+          <section id="conflict-banner" class="notice hidden">
+            <strong>Source conflicts detected</strong>
+            <p>Conflicting AIP written instructions and DOCX settings are separated from normal manual-review and submission-checklist items.</p>
+          </section>
+
+          <section class="toolbar panel">
+            <div>
+              <strong>Findings</strong>
+              <span id="visible-count"></span>
+            </div>
+            <div class="toolbar-actions">
+              <button id="select-fixable" class="secondary">Select fixable</button>
+              <button id="clear-selection" class="ghost">Clear</button>
+            </div>
+          </section>
+
+          <section id="findings" class="findings"></section>
+
+          <section class="apply-bar panel">
+            <div>
+              <strong id="selected-count">0 fixes selected</strong>
+              <span>Only deterministic formatting fixes are applied.</span>
+            </div>
+            <button id="apply" class="primary" disabled>Apply approved fixes</button>
+          </section>
+        </section>
+      </section>
+
+      <section id="templates-view" class="workspace-view hidden" role="tabpanel" aria-labelledby="template-tab" aria-hidden="true">
+        <section class="panel template-panel">
+          <div class="template-heading">
+            <div>
+              <h2>Template Rules</h2>
+              <p>Analyze an updated AIP DOCX locally and review measurable strategy changes.</p>
+            </div>
+            <span class="local-badge">local only</span>
+          </div>
+
+          <div class="template-current-strategy">
+            <strong>Current strategy</strong>
+            <span id="template-management-status">AIP Default (Built-in)</span>
+          </div>
+
+          <input id="template-file" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden />
+          <div class="template-upload-actions">
+            <button id="upload-template" class="secondary" type="button">Upload updated AIP template</button>
+            <button id="clear-template-upload" class="ghost" type="button">Clear upload</button>
+          </div>
+          <span id="template-file-name" class="template-file-name">No template selected</span>
+
+          <div id="template-analysis" class="template-analysis hidden">
+            <div id="template-summary" class="template-summary"></div>
+            <div id="template-components" class="template-components"></div>
+            <div class="template-selection-toolbar">
+              <strong id="template-selected-count">0 of 0 safe changes selected</strong>
+              <div class="template-selection-actions">
+                <button id="select-all-template-changes" class="secondary" type="button">Select all safe changes</button>
+                <button id="clear-template-changes" class="ghost" type="button">Clear selection</button>
+              </div>
+            </div>
+            <div id="template-proposals" class="template-proposals"></div>
+            <div class="template-management-actions">
+              <button id="create-imported-strategy" class="primary template-download" type="button" disabled>Create reviewed strategy</button>
+              <button id="download-template-strategy" class="secondary template-download" type="button" disabled>Download strategy JSON</button>
+            </div>
+            <p class="template-note">The built-in strategy is never overwritten. Accepted changes create a separate local strategy copy.</p>
+          </div>
+
+          <div id="imported-strategy-actions" class="imported-strategy-actions hidden">
+            <button id="use-imported-strategy" class="secondary" type="button">Use Imported Strategy</button>
+            <button id="restore-default" class="secondary" type="button">Restore AIP Default</button>
+            <button id="delete-imported" class="ghost" type="button">Delete Uploaded Strategy</button>
+          </div>
+          <div id="delete-imported-confirmation" class="delete-confirmation hidden">
+            <p>Delete the strategy created from <strong id="delete-imported-name"></strong>?</p>
+            <div class="delete-confirmation-actions">
+              <button id="cancel-delete-imported" class="ghost" type="button">Cancel</button>
+              <button id="confirm-delete-imported" class="danger" type="button">Delete strategy</button>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <span>Local add-in - no backend - no LLM</span>
+      <span id="status-dot">Waiting for Word</span>
+    </footer>
+  </div>
+</body>
+</html>

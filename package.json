@@ -1,0 +1,35 @@
+{
+  "name": "formascholar-word-web-addin",
+  "version": "0.4.5",
+  "private": true,
+  "description": "FormaScholar Word on the web add-in prototype for deterministic AIP manuscript formatting validation.",
+  "scripts": {
+    "dev": "webpack serve --mode development --port 3000",
+    "build": "webpack --mode production",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --pool=threads --no-file-parallelism --maxWorkers=1",
+    "test:watch": "vitest --pool=threads --no-file-parallelism --maxWorkers=1",
+    "test:coverage": "vitest run --coverage --pool=threads --no-file-parallelism --maxWorkers=1",
+    "validate-manifest": "office-addin-manifest validate manifest.xml"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1"
+  },
+  "devDependencies": {
+    "@types/office-js": "latest",
+    "@types/office-runtime": "latest",
+    "@types/webpack-env": "^1.18.8",
+    "copy-webpack-plugin": "^12.0.2",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.3",
+    "office-addin-dev-certs": "latest",
+    "office-addin-manifest": "latest",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3",
+    "vitest": "^5.0.1",
+    "webpack": "^5.111.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.1"
+  }
+}

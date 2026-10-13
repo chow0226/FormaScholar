@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.tsbuildinfo
+coverage/
+
+.env
+.env.*
+!.env.example
+
+reference/*.docx
+*.pem
+*.key
