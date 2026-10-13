@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import JSZip from 'jszip';
 import strategyJson from '../src/strategies/aip-2023.json';
@@ -17,6 +18,8 @@ import { parseCaptionNumber, romanNumeralToNumber } from '../src/core/CaptionNum
 import { canonicalSectionsForHeading, normalizeSectionHeading } from '../src/core/SectionOntology';
 
 const strategy = strategyJson as StrategyDefinition;
+const aipTemplateFixture = new URL('../reference/AIP Template(7).docx', import.meta.url);
+const hasAipTemplateFixture = existsSync(aipTemplateFixture);
 
 function paragraph(overrides: Partial<ParagraphSnapshot> = {}): ParagraphSnapshot {
   return {
@@ -2843,8 +2846,8 @@ describe('AIP deterministic validation', () => {
     expect(parsed[2].allCaps).toBe(true);
   });
 
-  it('parses the supplied AIP template as a real DOCX fixture', async () => {
-    const fixture = await readFile(new URL('../reference/AIP Template(7).docx', import.meta.url));
+  it.skipIf(!hasAipTemplateFixture)('parses the supplied AIP template as a real DOCX fixture', async () => {
+    const fixture = await readFile(aipTemplateFixture);
     const zip = await JSZip.loadAsync(fixture);
     const documentXml = await zip.file('word/document.xml')?.async('string');
     const stylesXml = await zip.file('word/styles.xml')?.async('string') || '';
@@ -2873,8 +2876,8 @@ describe('AIP deterministic validation', () => {
     expect(automaticReferences.every(p => p.referenceNumbering?.textPositionPt === 36)).toBe(true);
   });
 
-  it('recognizes the AIP template embedded table-caption arrangement', async () => {
-    const fixture = await readFile(new URL('../reference/AIP Template(7).docx', import.meta.url));
+  it.skipIf(!hasAipTemplateFixture)('recognizes the AIP template embedded table-caption arrangement', async () => {
+    const fixture = await readFile(aipTemplateFixture);
     const zip = await JSZip.loadAsync(fixture);
     const documentXml = await zip.file('word/document.xml')?.async('string');
     const stylesXml = await zip.file('word/styles.xml')?.async('string') || '';
