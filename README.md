@@ -46,7 +46,6 @@ Office.js is supplied by the Word host. The project includes Office.js and Offic
 - Webpack and `webpack-dev-server` for bundling and serving the add-in.
 - `office-addin-dev-certs` for the local HTTPS development certificate.
 - `office-addin-manifest` for validating the XML manifest.
-- Vitest for automated tests.
 - CSS and HTML webpack plugins/loaders for packaging the task pane.
 
 ## Run locally
@@ -100,10 +99,6 @@ Run these commands from the project directory:
 
 ```bash
 npm run dev               # Start the local HTTPS development server
-npm run typecheck         # Check TypeScript without emitting files
-npm test                  # Run the automated test suite once
-npm run test:watch        # Run tests in watch mode
-npm run test:coverage     # Run tests with coverage reporting
 npm run build             # Create the production bundle in dist/
 npm run validate-manifest # Validate manifest.xml
 ```
@@ -112,19 +107,8 @@ Windows shortcuts are also available:
 
 ```text
 START_DEV.bat             Start local development
-BUILD.bat                 Typecheck and create a production build
+BUILD.bat                 Create a production build
 VALIDATE_MANIFEST.bat     Validate the XML manifest
-```
-
-## Verify a change
-
-Before committing changes, run:
-
-```bash
-npm run typecheck
-npm test
-npm run build
-npm run validate-manifest
 ```
 
 The build output is generated in `dist/`. It is a generated folder and is not committed to Git.
@@ -149,7 +133,6 @@ FormaScholar/
 |   |-- taskpane/                        Task pane UI and interaction
 |   |-- template/                        Template analysis
 |   `-- word/                            Word document adapter
-`-- tests/                               Automated tests
 ```
 
 The supplied reference DOCX is kept local and is not included in the public repository. The derived metadata file in `reference/` is included for development and audit purposes.
